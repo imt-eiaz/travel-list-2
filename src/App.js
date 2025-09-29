@@ -2,6 +2,7 @@ import { useState } from "react";
 import Logo from "./Logo";
 import Form from "./Form";
 import { PackingList } from "./PackingList";
+import { Stats } from "./Stats";
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -44,44 +45,5 @@ export default function App() {
         <Stats items={items} />
       </div>
     </>
-  );
-}
-
-export function Item({ item, onDeleteItem, onToggleItem }) {
-  return (
-    <li>
-      <input
-        type="checkbox"
-        value={item.packed}
-        onChange={() => onToggleItem(item.id)}
-      />
-      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
-        {item.quantity} {item.description}
-      </span>
-      <button onClick={() => onDeleteItem(item.id)}>❌</button>
-    </li>
-  );
-}
-
-function Stats({ items }) {
-  if (items.length === 0)
-    return (
-      <p className="stats">
-        <em>Start adding items 🚀</em>
-      </p>
-    );
-  const numItems = items.length;
-  const numPacked = items.filter((item) => item.packed).length;
-  const percentage = Math.floor((numPacked / numItems) * 100);
-
-  return (
-    <footer className="stats">
-      <em>
-        {percentage === 100
-          ? "You have packed everything and ready to go ✈"
-          : `👜 You have ${numItems} items on your list, and you alraedy packed
-        ${numPacked} (${percentage}%) `}
-      </em>
-    </footer>
   );
 }
